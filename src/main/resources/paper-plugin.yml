@@ -1,0 +1,4 @@
+name: magicLeash
+version: '1.0.0'
+main: com.coldmint.magicLeash.MagicLeash
+api-version: '1.21'

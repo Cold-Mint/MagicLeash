@@ -1,0 +1,9 @@
+.idea/
+.gradle/
+build/
+.fleet/
+.vscode/
+# Mac filesystem dust
+.DS_Store/
+.DS_Store
+run/
