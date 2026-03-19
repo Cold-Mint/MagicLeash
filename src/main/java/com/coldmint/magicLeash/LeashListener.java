@@ -171,14 +171,16 @@ public class LeashListener implements Listener {
      * @param shears 剪刀
      */
     private void useShears(Player player, ItemStack shears) {
-        ItemMeta itemMeta = shears.getItemMeta();
-        if (itemMeta instanceof Damageable damageable) {
-            int newDamage = damageable.getDamage() + 1;
-            if (newDamage >= shears.getType().getMaxDurability()) {
-                player.getInventory().setItemInMainHand(null);
-            } else {
-                damageable.setDamage(newDamage);
-                shears.setItemMeta(itemMeta);
+        if (player.getGameMode() != GameMode.CREATIVE) {
+            ItemMeta itemMeta = shears.getItemMeta();
+            if (itemMeta instanceof Damageable damageable) {
+                int newDamage = damageable.getDamage() + 1;
+                if (newDamage >= shears.getType().getMaxDurability()) {
+                    player.getInventory().setItemInMainHand(null);
+                } else {
+                    damageable.setDamage(newDamage);
+                    shears.setItemMeta(itemMeta);
+                }
             }
         }
         player.playSound(player.getLocation(), Sound.ITEM_SHEARS_SNIP, 1, 1);
@@ -215,7 +217,9 @@ public class LeashListener implements Listener {
                 return;
             }
             if (item.getType() == Material.LEAD && !isPlayersBound) {
-                item.setAmount(item.getAmount() - 1);
+                if (master.getGameMode() != GameMode.CREATIVE) {
+                    item.setAmount(item.getAmount() - 1);
+                }
                 master.playSound(master.getLocation(), Sound.ITEM_LEAD_TIED, 1, 1);
                 bindPlayer(master, targetPlayer);
                 event.setCancelled(true);
